@@ -1,3 +1,5 @@
+def flag = true
+
 pipeline {
     agent any
 
@@ -10,6 +12,11 @@ pipeline {
         }
 
         stage('Test') {
+            when {
+                expression {
+                    return flag == false
+                }
+            }
             steps {
                 echo 'Testing...'
                 // Add your test commands here
@@ -18,7 +25,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Deploying...And test stage should be skipped'
+                
                 // Add your deployment commands here
             }
         }
