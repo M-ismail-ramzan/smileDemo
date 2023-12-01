@@ -1,9 +1,10 @@
 def flag = true
+def VERSION = '1.0.0' // Replace with your actual version or define it as needed
 
 pipeline {
     agent any
-    environment {
-        VERSION = "2.2.4"
+    tools {
+        maven 'Maven'
     }
     stages {
         stage('Build') {
@@ -16,7 +17,7 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    return flag == false
+                    return !flag
                 }
             }
             steps {
@@ -28,6 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying... And test stage should be skipped'
+                sh "nvm install"
                 // Add your deployment commands here
             }
         }
