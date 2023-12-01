@@ -2,11 +2,13 @@ def flag = true
 
 pipeline {
     agent any
-
+    environment {
+        VERSION = "2.2.4"
+    }
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
+                echo "Building... with version ${VERSION}"
                 // Add your build commands here
             }
         }
@@ -14,7 +16,7 @@ pipeline {
         stage('Test') {
             when {
                 expression {
-                    return flag == true
+                    return flag == false
                 }
             }
             steps {
@@ -25,7 +27,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                echo 'Deploying... And test stage should be skipped'
                 // Add your deployment commands here
             }
         }
